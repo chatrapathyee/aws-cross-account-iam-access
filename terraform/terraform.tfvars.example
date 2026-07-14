@@ -1,0 +1,6 @@
+security_account_id  = "123456789012"
+production_account_id = "210987654321"
+region               = "ap-south-1"
+
+# Optional if you use a named AWS profile
+# aws_profile = "your-profile"
