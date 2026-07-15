@@ -1,5 +1,7 @@
 resource "aws_iam_role" "security_audit_role" {
 
+  provider = aws.production
+
   name = "SecurityAuditRole"
 
   description = "Cross-account role for Security Account security audits"
