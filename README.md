@@ -1,31 +1,68 @@
-# AWS Cross Account IAM Access
+# AWS IAM Cross-Account Access
 
-Terraform uses the AWS provider in [terraform/providers.tf](terraform/providers.tf) and expects a valid AWS credential source.
+A production-style implementation of secure cross-account access using **AWS Organizations**, **AWS IAM Identity Center**, **AWS Security Token Service (STS)**, and **Terraform**.
 
-## Local setup
+This project demonstrates how enterprise security teams centrally manage access to AWS member accounts without using long-lived IAM users or shared administrator credentials.
 
-Use either a named AWS profile or standard AWS environment variables before running Terraform. Terraform cannot plan until one of these credential sources is available:
 
-```powershell
-$env:AWS_PROFILE = "your-profile"
-terraform plan
+## Overview
+
+In enterprise AWS environments, organizations typically separate workloads across multiple AWS accounts. Instead of creating administrators in every account, users authenticate through AWS IAM Identity Center and temporarily assume IAM roles in member accounts using AWS STS.
+
+This project implements that enterprise authentication model using Infrastructure as Code (Terraform).
+
+The architecture consists of:
+
+- AWS Organization
+- Security Account
+- Production Account
+- AWS IAM Identity Center
+- Cross-account IAM Role
+- Terraform-managed infrastructure
+
+
+## Architecture
+
+```text
+                    AWS Organization
+                           │
+          ┌────────────────┴────────────────┐
+          │                                 │
+          ▼                                 ▼
+   Security Account                Production Account
+          │                                 │
+          │                         SecurityAuditRole
+          │                                 ▲
+          └──────────── AssumeRole ─────────┘
+                     (AWS STS)
+
+              IAM Identity Center
+                     │
+               SecurityAdmin
 ```
 
-Or use access keys in the current shell session:
 
-```powershell
-$env:AWS_ACCESS_KEY_ID = "..."
-$env:AWS_SECRET_ACCESS_KEY = "..."
-$env:AWS_SESSION_TOKEN = "..." # only if you are using temporary credentials
-terraform plan
-```
+## Features
 
-Or pass a profile directly:
+- Multi-account AWS Organization
+- Security and Production account separation
+- AWS IAM Identity Center authentication
+- Cross-account IAM role assumption
+- AWS STS temporary credentials
+- Terraform Infrastructure as Code
+- IAM trust policies
+- Enterprise authentication workflow
 
-```powershell
-terraform plan -var='aws_profile=your-profile'
-```
 
-For the required account inputs, copy [terraform/terraform.tfvars.example](terraform/terraform.tfvars.example) to `terraform.tfvars` and fill in `security_account_id` and `production_account_id` with 12-digit AWS account IDs.
+## Skills Demonstrated
 
-If no AWS credentials are available, Terraform will still fail during provider initialization.
+- AWS Organizations
+- Organizational Units (OUs)
+- AWS IAM Identity Center
+- Permission Sets
+- Cross-account IAM Roles
+- AWS Security Token Service (STS)
+- Terraform
+- Infrastructure as Code (IaC)
+- AWS CLI with SSO
+- IAM Trust Policies

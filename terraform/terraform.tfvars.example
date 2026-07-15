@@ -1,3 +1,3 @@
-security_account_id   = "268140506244"
-production_account_id = "741987317345"
+production_account_id = "<PRODUCTION_ACCOUNT_ID>"
+security_account_id   = "<SECURITY_ACCOUNT_ID>"
 region                = "ap-south-1"

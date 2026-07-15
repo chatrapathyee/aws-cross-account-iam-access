@@ -1,19 +1,25 @@
-# Terraform
+# Terraform working directory
 .terraform/
+
+# Terraform state files
 *.tfstate
 *.tfstate.*
-.terraform.lock.hcl
-!.terraform.lock.hcl
-# Variable files
-*.tfvars
-*.tfvars.json
+
+# Terraform variable files containing real values
+terraform.tfvars
 
 # Crash logs
 crash.log
-crash.*.log
 
-# Sensitive files
+# Override files
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Terraform plan files
+*.tfplan
+
+# CLI configuration
+.terraformrc
+terraform.rc
